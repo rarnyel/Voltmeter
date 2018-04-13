@@ -1,0 +1,35 @@
+Basic Functionality:
+	- Display a welcome message and the range of input voltages
+	- Constantly update the current DC voltage applied to the ADC
+	- A hold button may be pressed to hold the current value
+	- Pressing the hold button again resumes measurement
+
+Advanced Functionality:
+	- A second ADC connected to the PIC to measure a secondary DC / voltage differential
+	- Pressing a mode button shows the maximum voltage applied
+	- Pressing a sample button stores in memory
+	- An alarm feature should sound a buzzer if voltage falls below a threshold
+	- The built in timer for the PIC should measure and display the time it spends below threshold
+
+Separate functions required:
+/	- Function for welcome message
+/	- Function to measure calculate the DC voltage applied
+/	- Maybe function to check hold
+/	- Function to show the maximum voltage applied
+/	- Function to time and display the time spent below threshold
+	- Maybe function to display voltage if it's more than a few lines
+
+Pins taken (out of 13):
+	- LCD		7 pins
+	- ADC		3 pins
+		second ADC would maybe require multiplexing and extra pin for button
+	- Interrupt 2 pins	(RB0, 4-7)
+
+For the hold button:
+	Add a flag for whether held or not
+	Toggle flag in interrupt
+	If statement in main loop to check whether held or not
+
+Misc:
+	Displaying the number shouldn't be part of any other functions
+	
