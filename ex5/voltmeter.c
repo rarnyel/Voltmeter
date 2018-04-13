@@ -4,6 +4,8 @@
 #pragma config PWRTE = ON
 #pragma config CP = OFF
 
+
+//test
 // Set oscillator frequency
 #define _XTAL_FREQUENCY 4000000
 
