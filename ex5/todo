@@ -24,6 +24,9 @@ Pins taken (out of 13):
 	- ADC		3 pins
 		second ADC would maybe require multiplexing and extra pin for button
 	- Interrupt 2 pins	(RB0, 4-7)
+		Hold button as RB0
+		Switch ADC button
+		Voltage differential button?
 
 For the hold button:
 	Add a flag for whether held or not

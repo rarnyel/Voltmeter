@@ -12,6 +12,19 @@
 #include "adc.h"
 #include "lcd.h"
 
+// General variable setup
+	// Setting up flags
+	int holdFlag = 0;	// 1 if hold, switch using the interrupt
+	// To add flags for switching ADC later on	
+
+	// Setting storage variable for raw ADC output
+	unsigned int adc1 = 0;
+	//unsigned int adc2 = 0;
+
+	// Setting storage variable for actual voltage
+	float voltage1 = 0;
+	//float voltage2 = 0;
+
 void interrupt isr(){
 	// Reset interrupt flag
 	INTCONbits.INTF = 0;
@@ -25,8 +38,10 @@ void welcome(){
 int voltage(){
 	// Measuring voltage from ADC
 	// Returns actual voltage
-	// Maybe it measures which ADC and returns relevant voltage
+	// Maybe it checks which ADC is enabled and returns relevant voltage
+	// 10-bit ADC so 1024 discrete voltage points between 0.25V and Vdd
 	adc1 = readADC();
+	voltage1 = (adc*5)/1023;
 }
 
 int hold(){
@@ -61,13 +76,10 @@ void main(){
 	CS = 1;
 	CLK = 0;
 
-	// Setting up flags
-	int holdFlag = 0;	// 1 if hold, switch using the interrupt
-	// To add flags for switching ADC later on	
-	
-	// Setting storage variable for raw ADC output
-	unsigned int adc1 = 0;
-	//unsigned int adc2 = 0;
+	// Set R/W pin on LCD to W and init LCD
+	RW = 0;
+	Lcd_Init();
+	Lcd_Clear();
 
 	// Display welcome message
 	welcome();
@@ -77,6 +89,8 @@ void main(){
 		switch(holdFlag){
 			case 0:
 				// Read and display ADC voltage
+				// Print voltage1
+				// Delay
 			case 1:
 				// Hold last measured ADC voltage
 		}
