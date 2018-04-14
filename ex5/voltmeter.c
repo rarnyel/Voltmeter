@@ -4,8 +4,6 @@
 #pragma config PWRTE = ON
 #pragma config CP = OFF
 
-
-//test
 // Set oscillator frequency
 #define _XTAL_FREQUENCY 4000000
 
@@ -28,6 +26,7 @@ int voltage(){
 	// Measuring voltage from ADC
 	// Returns actual voltage
 	// Maybe it measures which ADC and returns relevant voltage
+	adc1 = readADC();
 }
 
 int hold(){
@@ -57,12 +56,29 @@ void main(){
 	INTCONbits.INTE = 1;
 	// Global interrupt enable
 	INTCONbits.GIE = 1;
+
+	// Set CS high and CLK low for ADC
+	CS = 1;
+	CLK = 0;
+
+	// Setting up flags
+	int holdFlag = 0;	// 1 if hold, switch using the interrupt
+	// To add flags for switching ADC later on	
 	
+	// Setting storage variable for raw ADC output
+	unsigned int adc1 = 0;
+	//unsigned int adc2 = 0;
+
 	// Display welcome message
 	welcome();
 
 	// Main loop
 	while(1){
-	
+		switch(holdFlag){
+			case 0:
+				// Read and display ADC voltage
+			case 1:
+				// Hold last measured ADC voltage
+		}
 	}
 }
