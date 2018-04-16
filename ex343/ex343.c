@@ -9,14 +9,15 @@
 #include <xc.h>
 
 int a = 0;
+int pause = 0;
 
 // Assuming pins a,b,c are RB1,2,3
 int convertSevenSeg(int input){
 	switch (input){
 		case 0:
-			return 0b10000000;
+			return 0b00000000;
 		case 1:
-			return 0b11110010;
+			return 0b01110010;
 		case 2:
 			return 0b01001000;
 		case 3:
@@ -28,7 +29,7 @@ int convertSevenSeg(int input){
 		case 6:
 			return 0b00000100;
 		case 7:
-			return 0b11110000;
+			return 0b01110000;
 		case 8:
 			return 0b00000000;
 		case 9:
@@ -39,32 +40,46 @@ int convertSevenSeg(int input){
 }
 
 void interrupt isr(){
+    
+    if(INTCONbits.RBIF){
+        pause = ~pause;
+    }
+    else{
+        //resets counter
+        a = 0;
+    }
+    
+    a = 0;
 	// Reset the interrupt flag
 	INTCONbits.INTF = 0;
-	
-	// Resets counter
-	a = 0;
+    INTCONbits.RBIF = 0;
 }
 
 void main(){
 	// Set all of PORTA to inputs
 	TRISA = 0XFF;
 	// Set appropriate pins on PORTB to outputs
-	TRISB = 0b00000001;
+	TRISB = 0b10000001;
 	// Reset the external interrupt flag
 	INTCONbits.INTF = 0;
+    // Reset the RB interrupt-on-change flag
+    INTCONbits.RBIF = 0;
 	// Interrupt on the rising edge
 	OPTION_REGbits.INTEDG = 1;
 	// Enable the external interrupt
 	INTCONbits.INTE = 1;
+    // Enable the RB interrupt-on-change
+    INTCONbits.RBIE = 1;        // For some reason this freezes the PIC when switch set to run
 	// Global interrupt enable
 	INTCONbits.GIE = 1;
 
 	while(1){
 		for(a=0;a<10;a++){
+            while(pause==1){
+                PORTB = convertSevenSeg(a);
+            }
 			PORTB = convertSevenSeg(a);
 			__delay_ms(1000);
 		}
 	}
 }
-
