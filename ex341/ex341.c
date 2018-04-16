@@ -37,6 +37,10 @@ int convertSevenSeg(int input){
 }
 
 void main(){
+
+	// Set PORTB as output
+	TRISB = 0x00;
+
 	while(1){
 		PORTB = convertSevenSeg(3);
 	}

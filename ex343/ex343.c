@@ -41,16 +41,9 @@ int convertSevenSeg(int input){
 void interrupt isr(){
 	// Reset the interrupt flag
 	INTCONbits.INTF = 0;
-
-	// Flashes a circle to show interrupt
-	PORTB = 0b11111100;
-	__delay_ms(250);
-	PORTB = 0b11110000;
-	__delay_ms(250);
-	PORTB = 0b11100000;
-	__delay_ms(250);
-	PORTB = 0b10000000;
-	__delay_ms(250);
+	
+	// Resets counter
+	a = 0;
 }
 
 void main(){
@@ -68,7 +61,7 @@ void main(){
 	INTCONbits.GIE = 1;
 
 	while(1){
-		for(a=0;a=9;a++){
+		for(a=0;a<10;a++){
 			PORTB = convertSevenSeg(a);
 			__delay_ms(1000);
 		}
