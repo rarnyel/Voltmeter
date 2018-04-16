@@ -49,7 +49,6 @@ void interrupt isr(){
         a = 0;
     }
     
-    a = 0;
 	// Reset the interrupt flag
 	INTCONbits.INTF = 0;
     INTCONbits.RBIF = 0;
@@ -69,7 +68,7 @@ void main(){
 	// Enable the external interrupt
 	INTCONbits.INTE = 1;
     // Enable the RB interrupt-on-change
-    INTCONbits.RBIE = 1;        // For some reason this freezes the PIC when switch set to run
+    INTCONbits.RBIE = 1;
 	// Global interrupt enable
 	INTCONbits.GIE = 1;
 
