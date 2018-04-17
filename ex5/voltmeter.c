@@ -59,7 +59,7 @@ int voltage(){
 	// Maybe it checks which ADC is enabled and returns relevant voltage
 	// 10-bit ADC so 1024 discrete voltage points between 0.25V and Vdd
 	adc1 = readADC();
-	voltage1 = (adc*4.75)/1023;
+	voltage1 = (adc1*4.75)/1023;
 }
 
 int hold(){
@@ -96,7 +96,7 @@ void main(){
 
 	// Set CS high and CLK low for ADC
 	CS = 1;
-//	CLK = 0;	(Now unnecessary)
+	CLK = 0;	// (Maybe unnecessary)
 
 	// Set R/W pin on LCD to W and init LCD
 //	RW = 0;		(Now unnecessary)
@@ -110,10 +110,12 @@ void main(){
 	while(1){
 		switch(holdFlag){
 			case 0:
+				welcome();
 				// Read and display ADC voltage
 				// Print voltage1
 				// Delay
 			case 1:
+				welcome();
 				// Hold last measured ADC voltage
 		}
 	}
