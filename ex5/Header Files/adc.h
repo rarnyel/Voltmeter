@@ -4,7 +4,7 @@
 // Define the oscillator frequency, needed for delays
 #define _XTAL_FREQ  4000000
 
-// Define the ping connections
+// Define the pin connections
 #define CS RA0
 #define CLK RA1
 #define DIN RA2

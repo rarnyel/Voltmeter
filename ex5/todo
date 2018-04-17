@@ -10,26 +10,29 @@ Advanced Functionality:
 	- Pressing a sample button stores in memory
 	- An alarm feature should sound a buzzer if voltage falls below a threshold
 	- The built in timer for the PIC should measure and display the time it spends below threshold
+			Could add to the volt function
 
 Separate functions required:
-/	- Function for welcome message
-/	- Function to measure calculate the DC voltage applied
-/	- Maybe function to check hold
-/	- Function to show the maximum voltage applied
-/	- Function to time and display the time spent below threshold
+*	- Function for welcome message
+*	- Function to measure calculate the DC voltage applied
+*	- Maybe function to check hold
+*	- Function to show the maximum voltage applied
+*	- Function to time and display the time spent below threshold
 	- Maybe function to display voltage if it's more than a few lines
 
 Pins taken (out of 13):
-	- LCD		7 pins
-	- ADC		3 pins
+	- LCD		6 pins (Maybe 5)
+	- ADC		3 pins (Maybe 2)
 		second ADC would maybe require multiplexing and extra pin for button
-	- Interrupt 2 pins	(RB0, 4-7)
+	- Interrupt 2 pins	(RB0, RB7)	(Plus extra pin for third button)
 		Hold button as RB0
 			Holds the current value
 			Pressing max button displays current voltage alongside max
 			Pressing Sample button samples it
 		Switch ADC button
 			Toggles between ADC1, ADC2 and differential
+		Need to connect a third button somewhere
+	- Buzzer 	1 pin
 
 For the hold button:
 	Add a flag for whether held or not
@@ -39,4 +42,3 @@ For the hold button:
 Misc:
 	Displaying the number shouldn't be part of any other functions
 	Just connect R/W for the LCD to ground
-	

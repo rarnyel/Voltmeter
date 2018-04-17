@@ -33,6 +33,24 @@ void interrupt isr(){
 
 void welcome(){
 	// Show welcome message and voltage limits
+	Lcd_Clear();			// Technically unnecessary
+	Lcd_Set_Cursor(1,1);	// Sets cursor on first 8 bits
+	Lcd_Write_String("Hello Wo");
+	Lcd_Set_Cursor(2,1);
+	Lcd_Write_String("rld!");
+	__delay_ms(2000);
+	Lcd_Clear();
+	Lcd_Set_Cursor(1,1);	// Maybe not needed
+	Lcd_Write_String("V min =");
+	Lcd_Set_Cursor(2,1);
+	Lcd_Write_String("0.25 V");
+	__delay_ms(1000);
+	Lcd_Clear();
+	Lcd_Set_Cursor(2,1);	// Maybe not needed
+	Lcd_Write_String("V max =");
+	Lcd_Set_Cursor(2,1);
+	Lcd_Write_String("4.75 V");
+	__delay_ms(1000);
 }
 
 int voltage(){
@@ -41,7 +59,7 @@ int voltage(){
 	// Maybe it checks which ADC is enabled and returns relevant voltage
 	// 10-bit ADC so 1024 discrete voltage points between 0.25V and Vdd
 	adc1 = readADC();
-	voltage1 = (adc*5)/1023;
+	voltage1 = (adc*4.75)/1023;
 }
 
 int hold(){
@@ -65,19 +83,23 @@ void main(){
 
 	// Reset the external interrupt flag
 	INTCONbits.INTF = 0;
+	// Reset the RB interrupt-on-change flag
+	INTCONbits.RBIF = 0;
 	// Interrupt on the rising edge
 	OPTION_REGbits.INTEDG = 1;
 	// Enable the external interrupt
 	INTCONbits.INTE = 1;
+	// Enable the RB interrupt-on-change
+	INTCONbits.RBIE = 1;
 	// Global interrupt enable
 	INTCONbits.GIE = 1;
 
 	// Set CS high and CLK low for ADC
 	CS = 1;
-	CLK = 0;
+//	CLK = 0;	(Now unnecessary)
 
 	// Set R/W pin on LCD to W and init LCD
-	RW = 0;
+//	RW = 0;		(Now unnecessary)
 	Lcd_Init();
 	Lcd_Clear();
 
