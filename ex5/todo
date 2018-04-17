@@ -38,4 +38,5 @@ For the hold button:
 
 Misc:
 	Displaying the number shouldn't be part of any other functions
+	Just connect R/W for the LCD to ground
 	
