@@ -78,8 +78,8 @@ int time(){
 
 void main(){
 	// Setting up TRISA and TRISB
-	TRISA = 0x00;
-	TRISB = 0x00;
+	TRISA = 0b00000001;
+	TRISB = 0b11100001;
 
 	// Reset the external interrupt flag
 	INTCONbits.INTF = 0;
@@ -96,10 +96,10 @@ void main(){
 
 	// Set CS high and CLK low for ADC
 	CS = 1;
-	CLK = 0;	// (Maybe unnecessary)
+	CLK = 0;	// 	(Maybe unnecessary)
 
 	// Set R/W pin on LCD to W and init LCD
-//	RW = 0;		(Now unnecessary)
+	RW = 0;		//	(Now unnecessary)
 	Lcd_Init();
 	Lcd_Clear();
 
@@ -110,12 +110,10 @@ void main(){
 	while(1){
 		switch(holdFlag){
 			case 0:
-				welcome();
 				// Read and display ADC voltage
 				// Print voltage1
 				// Delay
 			case 1:
-				welcome();
 				// Hold last measured ADC voltage
 		}
 	}

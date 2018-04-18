@@ -11,7 +11,7 @@
 #define _XTAL_FREQUENCY 4000000
 
 void main(){
-    unsigned int counter = 0;
+	TRISA = 0x00;
     TRISB = 0x00;
     
     RW = 0;

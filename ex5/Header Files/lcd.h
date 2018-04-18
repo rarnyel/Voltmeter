@@ -12,13 +12,13 @@
 #define _XTAL_FREQ  4000000
 
 // Define the pin connections
-#define RS RB4
-//#define RW RB5	(Technically no longer needed)
-#define EN RB6
-#define D4 RB0
-#define D5 RB1
-#define D6 RB2
-#define D7 RB3
+#define RS RA1
+#define RW RA2		//(Technically no longer needed)
+#define EN RA3
+#define D4 RB1
+#define D5 RB2
+#define D6 RB3
+#define D7 RB4
 
 // Set the bits on the LCD port
 void Lcd_Port(char a);
