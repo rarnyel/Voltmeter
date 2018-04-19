@@ -38,19 +38,19 @@ void welcome(){
 	Lcd_Write_String("Hello Wo");
 	Lcd_Set_Cursor(2,1);
 	Lcd_Write_String("rld!");
-	__delay_ms(2000);
+	__delay_ms(3000);
 	Lcd_Clear();
 	Lcd_Set_Cursor(1,1);	// Maybe not needed
 	Lcd_Write_String("V min =");
 	Lcd_Set_Cursor(2,1);
 	Lcd_Write_String("0.25 V");
-	__delay_ms(1000);
+	__delay_ms(1500);
 	Lcd_Clear();
 	Lcd_Set_Cursor(2,1);	// Maybe not needed
 	Lcd_Write_String("V max =");
 	Lcd_Set_Cursor(2,1);
 	Lcd_Write_String("4.75 V");
-	__delay_ms(1000);
+	__delay_ms(1500);
 }
 
 int voltage(){
