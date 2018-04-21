@@ -13,12 +13,10 @@ Advanced Functionality:
 			Could add to the volt function
 
 Separate functions required:
-*	- Function for welcome message
-*	- Function to measure calculate the DC voltage applied
-*	- Maybe function to check hold
-*	- Function to show the maximum voltage applied
+/	- Function for welcome message
+/	- Function to measure calculate the DC voltage applied
+/	- Function to show the maximum voltage applied
 *	- Function to time and display the time spent below threshold
-	- Maybe function to display voltage if it's more than a few lines
 
 Pins taken (out of 13):
 	- LCD		6 pins (Maybe 5)
