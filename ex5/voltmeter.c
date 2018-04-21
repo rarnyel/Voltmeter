@@ -35,19 +35,12 @@ void interrupt isr(){
 		case 1:
 			holdFlag = !holdFlag;
 			break;
-	//	case 0:
-			// Code for other buttons
-			// break;
 	}
 	
 	switch(INTCONbits.RBIF){
 		case 1:
 			adcFlag = !adcFlag;
 			break;
-	//	case 0:
-			// Code for other buttons 
-			// Maybe turn it into a tristate for differential voltage
-			// break;
 	}
 
 	// Reset interrupt flag
@@ -85,16 +78,16 @@ int voltageFunc(int adcFlag){
 	switch (adcFlag){
 		case 1:
 			adc1 = readADC();
-			voltage1 = (adc1*4.75)/1023;
+			voltage1 = adc1*0.0044;
 			break;
 		case 2:
 			adc2 = readADC();
-			voltage2 = (adc2*4.75)/1023;
+			voltage2 = adc2*0.0044;
 			break;
 	}
 }
 
-float maxVoltage(int prevVoltage, int voltage){
+float maxVoltage(float prevVoltage, float voltage){
 	// Function to measure and store max voltage
 	// Maybe takes voltage as input and checks it against max
 	if(prevVoltage > maxVoltage){
@@ -131,21 +124,19 @@ void main(){
 	// Interrupt on the rising edge
 	OPTION_REGbits.INTEDG = 1;
 	// Enable the external interrupt
-	INTCONbits.INTE = 0;
+	INTCONbits.INTE = 1;
 	// Enable the RB interrupt-on-change
-	INTCONbits.RBIE = 0;
+	INTCONbits.RBIE = 1;
 	// Global interrupt enable
 	INTCONbits.GIE = 1;
 
 	// Set CS high and CLK low for ADC
 	CS = 1;
-	CLK = 0;	// 	(Maybe unnecessary)
+	CLK = 0;
 
-	// Set R/W pin on LCD to W and init LCD
+	// Initialise LCD and show welcome message
 	Lcd_Init();
 	Lcd_Clear();
-
-	// Display welcome message
 	welcome();
 
 	// Main loop
