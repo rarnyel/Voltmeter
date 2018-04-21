@@ -13,7 +13,6 @@
 
 // Define the pin connections
 #define RS RA2
-#define RW RA2		//(Technically no longer needed)
 #define EN RA3
 #define D4 RB1
 #define D5 RB2
