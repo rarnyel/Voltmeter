@@ -34,16 +34,20 @@ void interrupt isr(){
 	switch(INTCONbits.INTF){
 		case 1:
 			holdFlag = !holdFlag;
+			break;
 	//	case 0:
 			// Code for other buttons
+			// break;
 	}
 	
 	switch(INTCONbits.RBIF){
 		case 1:
 			adcFlag = !adcFlag;
+			break;
 	//	case 0:
 			// Code for other buttons 
 			// Maybe turn it into a tristate for differential voltage
+			// break;
 	}
 
 	// Reset interrupt flag
@@ -82,9 +86,11 @@ int voltage(int adcFlag){
 		case 1:
 			adc1 = readADC();
 			voltage1 = (adc1*4.75)/1023;
+			break;
 		case 2:
 			adc2 = readADC();
 			voltage2 = (adc2*4.75)/1023;
+			break;
 	}
 }
 
@@ -102,8 +108,10 @@ void print(int cursor, int string, input){
 	switch(string){
 		case 0:		// for string
 			Lcd_Write_String(input);
+			break;
 		case 1:
 			Lcd_Write_Char(input):
+			break;
 	}		
 }	
 
@@ -157,14 +165,19 @@ void main(){
 				switch(adcFlag){
 					case 0:
 						Lcd_Write_String("V1");
+						break;
 					case 1;
 						Lcd_Write_String("V2");
+						break;
 				}
+
+				break;
 
 			case 1:
 				// Hold last measured ADC voltage
 				Lcd_Clear();
 				Lcd_Write_Char(voltage);
+				break;
 		}
 	}
 }
