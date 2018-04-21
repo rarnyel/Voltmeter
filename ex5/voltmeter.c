@@ -32,14 +32,14 @@ void interrupt isr(){
 	switch(INTCONbits.INTF){
 		case 1:
 			holdFlag = !holdFlag;
-		case 0:
+	//	case 0:
 			// Code for other buttons
 	}
 	
 	switch(INTCONbits.RBIF){
 		case 1:
 			adcFlag = !adcFlag;
-		case 0:
+	//	case 0:
 			// Code for other buttons 
 			// Maybe turn it into a tristate for differential voltage
 	}
