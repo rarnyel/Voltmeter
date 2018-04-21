@@ -26,7 +26,7 @@
 	float prevVoltage = 0;
 	float maxVoltage = 0;
 	float voltage1 = 0;
-	float voltage2  0;
+	float voltage2 = 0;
 	
 	// Setting variables for the LCD functions
 
@@ -70,19 +70,19 @@ void welcome(){
 	Lcd_Write_String("0.25 V");
 	__delay_ms(1500);
 	Lcd_Clear();
-	Lcd_Set_Cursor(2,1);	// Maybe not needed
+	Lcd_Set_Cursor(1,1);	// Maybe not needed
 	Lcd_Write_String("V max =");
 	Lcd_Set_Cursor(2,1);
 	Lcd_Write_String("4.75 V");
 	__delay_ms(1500);
 }
 
-int voltage(int adcFlag){
+int voltageFunc(int adcFlag){
 	// Measuring voltage from ADC
 	// Returns actual voltage
 	// Maybe it checks which ADC is enabled and returns relevant voltage
 	// 10-bit ADC so 1024 discrete voltage points between 0.25V and Vdd
-	switch (adc){
+	switch (adcFlag){
 		case 1:
 			adc1 = readADC();
 			voltage1 = (adc1*4.75)/1023;
@@ -94,7 +94,7 @@ int voltage(int adcFlag){
 	}
 }
 
-int maxVoltage(int prevVoltage, int voltage){
+float maxVoltage(int prevVoltage, int voltage){
 	// Function to measure and store max voltage
 	// Maybe takes voltage as input and checks it against max
 	if(prevVoltage > maxVoltage){
@@ -102,7 +102,7 @@ int maxVoltage(int prevVoltage, int voltage){
 	}
 }
 
-void print(int cursor, int string, input){
+void print(int cursor, int string, char input){
 	Lcd_Clear();
 	Lcd_Set_Cursor(cursor,1);
 	switch(string){
@@ -121,8 +121,8 @@ int time(){
 
 void main(){
 	// Setting up TRISA and TRISB
-	TRISA = 0b00000001;
-	TRISB = 0b11100001;
+	TRISA = 0b00010011;
+	TRISB = 0b10000001;
 
 	// Reset the external interrupt flag
 	INTCONbits.INTF = 0;
@@ -131,9 +131,9 @@ void main(){
 	// Interrupt on the rising edge
 	OPTION_REGbits.INTEDG = 1;
 	// Enable the external interrupt
-	INTCONbits.INTE = 1;
+	INTCONbits.INTE = 0;
 	// Enable the RB interrupt-on-change
-	INTCONbits.RBIE = 1;
+	INTCONbits.RBIE = 0;
 	// Global interrupt enable
 	INTCONbits.GIE = 1;
 
@@ -142,7 +142,6 @@ void main(){
 	CLK = 0;	// 	(Maybe unnecessary)
 
 	// Set R/W pin on LCD to W and init LCD
-//	RW = 0;		//	(Now unnecessary)
 	Lcd_Init();
 	Lcd_Clear();
 
@@ -154,11 +153,11 @@ void main(){
 		switch(holdFlag){
 			case 0:
 				// Read and display ADC voltage
-				prevVoltage = Voltage;
-				voltage = voltage(adcFlag);
+				prevVoltage = voltage;
+				voltage = voltageFunc(adcFlag);
 				Lcd_Clear();
 				Lcd_Set_Cursor(1,1);
-				Lcd_Write_Char(voltage);
+				Lcd_Write_Int(adc1);
 				Lcd_Set_Cursor(2,1);
 				
 				// Prints V1 or V2 based on which ADC is being read
@@ -166,10 +165,10 @@ void main(){
 					case 0:
 						Lcd_Write_String("V1");
 						break;
-					case 1;
+					case 1:
 						Lcd_Write_String("V2");
 						break;
-				}
+      			}
 
 				break;
 
