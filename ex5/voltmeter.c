@@ -22,11 +22,11 @@
 	unsigned int adc2 = 0;
 
 	// Setting storage variable for actual voltage
-	float voltage = 0;
-	float prevVoltage = 0;
-	float maxVoltage = 0;
-	float voltage1 = 0;
-	float voltage2 = 0;
+	unsigned int voltage = 0;
+	unsigned int prevVoltage = 0;
+	unsigned int maxVoltage = 0;
+	unsigned int voltage1 = 0;
+	unsigned int voltage2 = 0;
 	
 	// Setting variables for the LCD functions
 
@@ -88,65 +88,66 @@ int voltageFunc(int adcFlag){
 }
 
 int voltageFloor(int adc){
-	voltage = adc / 57;
+	return adc / 57;
 	switch(voltage){
 		case 1:
-			voltage = 25;
+			return 25;
 			break;
 		case 2:
-			voltage = 50;
+			return  50;
 			break;
 		case 3:
-			voltage = 75;
+			return 75;
 			break;
 		case 4:
-			voltage = 100;
+			return 100;
 			break;
 		case 5:
-			voltage = 125;
+			return 125;
 			break;
 		case 6:
-			voltage = 150;
+			return 150;
 			break;
 		case 7:
-			voltage = 175;
+			return 175;
 			break;
 		case 8:
-			voltage = 200;
+			return 200;
 			break;
 		case 9:
-			voltage = 225;
+			return 225;
 			break;
 		case 10:
-			voltage = 250;
+			return 250;
 			break;
 		case 11:
-			voltage = 275;
+			return 275;
 			break;
 		case 12:
-			voltage = 300;
+			return 300;
 			break;
 		case 13:
-			voltage = 325;
+			return 325;
 			break;
 		case 14:
-			voltage = 350;
+			return 350;
 			break;
 		case 15:
-			voltage = 375;
+			return 375;
 			break;
 		case 16:
-			voltage = 400;
+			return 400;
 			break;
 		case 17:
-			voltage = 425;
+			return 425;
 			break;
 		case 18:
-			voltage = 450;
+			return 450;
 			break;
+		}
 }
 
-float maxVoltageFunc(float prevVoltage, float voltage){
+int maxVoltageFunc(int prevVoltage, int voltage){
 	// Function to measure and store max voltage
 	// Maybe takes voltage as input and checks it against max
 	if(prevVoltage > maxVoltage){
@@ -213,10 +214,10 @@ void main(){
 				// Prints V1 or V2 based on which ADC is being read
 				switch(adcFlag){
 					case 0:
-						Lcd_Write_String("V1");
+						Lcd_Write_String("mV1");
 						break;
 					case 1:
-						Lcd_Write_String("V2");
+						Lcd_Write_String("mV2");
 						break;
       			}
 
