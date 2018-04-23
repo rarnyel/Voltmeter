@@ -88,7 +88,7 @@ int voltageFunc(int adcFlag){
 }
 
 int voltageFloor(int adc){
-	return adc / 57;
+	voltage = adc / 57;
 	switch(voltage){
 		case 1:
 			return 25;
