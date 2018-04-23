@@ -55,19 +55,13 @@ void welcome(){
 	Lcd_Write_String("Hello Wo");
 	Lcd_Set_Cursor(2,1);
 	Lcd_Write_String("rld!");
-	__delay_ms(3000);
+	__delay_ms(1000);
 	Lcd_Clear();
-	Lcd_Set_Cursor(1,1);	// Maybe not needed
-	Lcd_Write_String("V min =");
+	Lcd_Set_Cursor(1,1);	
+	Lcd_Write_String("250 - 47");
 	Lcd_Set_Cursor(2,1);
-	Lcd_Write_String("0.25 V");
-	__delay_ms(1500);
-	Lcd_Clear();
-	Lcd_Set_Cursor(1,1);	// Maybe not needed
-	Lcd_Write_String("V max =");
-	Lcd_Set_Cursor(2,1);
-	Lcd_Write_String("4.75 V");
-	__delay_ms(1500);
+	Lcd_Write_String("50 mV");
+	__delay_ms(500);
 }
 
 int voltageFunc(int adcFlag){
@@ -89,62 +83,13 @@ int voltageFunc(int adcFlag){
 
 int voltageFloor(int adc){
 	voltage = adc / 57;
-	switch(voltage){
-		case 1:
-			return 25;
-			break;
-		case 2:
-			return  50;
-			break;
-		case 3:
-			return 75;
-			break;
-		case 4:
-			return 100;
-			break;
-		case 5:
-			return 125;
-			break;
-		case 6:
-			return 150;
-			break;
-		case 7:
-			return 175;
-			break;
-		case 8:
-			return 200;
-			break;
-		case 9:
-			return 225;
-			break;
-		case 10:
-			return 250;
-			break;
-		case 11:
-			return 275;
-			break;
-		case 12:
-			return 300;
-			break;
-		case 13:
-			return 325;
-			break;
-		case 14:
-			return 350;
-			break;
-		case 15:
-			return 375;
-			break;
-		case 16:
-			return 400;
-			break;
-		case 17:
-			return 425;
-			break;
-		case 18:
-			return 450;
-			break;
-		}
+	voltage = adc * 286;
+
+	if(voltage<286){
+		voltage = 286;
+	}
+	
+	return voltage;
 }
 
 int maxVoltageFunc(int prevVoltage, int voltage){
@@ -208,7 +153,7 @@ void main(){
 				voltage = voltageFunc(adcFlag);
 				Lcd_Clear();
 				Lcd_Set_Cursor(1,1);
-				Lcd_Write_Int(adc1);
+				Lcd_Write_Voltage(voltage);
 				Lcd_Set_Cursor(2,1);
 				
 				// Prints V1 or V2 based on which ADC is being read
@@ -226,7 +171,7 @@ void main(){
 			case 1:
 				// Hold last measured ADC voltage
 				Lcd_Clear();
-				Lcd_Write_Char(voltage);
+				Lcd_Write_Int(voltage);
 				break;
 		}
 	}

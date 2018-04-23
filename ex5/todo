@@ -42,7 +42,11 @@ Misc:
 	Just connect R/W for the LCD to ground
 
 Immediate Jobs:
+	Find out how much the welcome takes
+	Test the interrupts
+	Check if you need to reset cursor after clear
+	Check to see if we need break in the voltageFloor function
+	Only update V1 V2 on pressing switch button
 	
 Things to find out:	
-	How the sampling works
 	
