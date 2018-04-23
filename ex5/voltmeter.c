@@ -70,7 +70,7 @@ void welcome(){
 	__delay_ms(1500);
 }
 
-int voltageFunc(int adcFlag){
+float voltageFunc(int adcFlag){
 	// Measuring voltage from ADC
 	// Returns actual voltage
 	// Maybe it checks which ADC is enabled and returns relevant voltage
@@ -78,16 +78,57 @@ int voltageFunc(int adcFlag){
 	switch (adcFlag){
 		case 1:
 			adc1 = readADC();
-			voltage1 = adc1*0.0044;
+			voltage1 = voltageFloor(adc1);
 			break;
 		case 2:
 			adc2 = readADC();
-			voltage2 = adc2*0.0044;
+			voltage2 = voltageFloor(adc2);
 			break;
 	}
 }
 
-float maxVoltage(float prevVoltage, float voltage){
+int voltageFloor(int adc){
+	voltage = adc / 57;
+	switch(voltage){
+		case 1:
+			voltage = 25;
+		case 2:
+			voltage = 50;
+		case 3:
+			voltage = 75;
+		case 4:
+			voltage = 100;
+		case 5:
+			voltage = 125;
+		case 6:
+			voltage = 150;
+		case 7:
+			voltage = 175;
+		case 8:
+			voltage = 200;
+		case 9:
+			voltage = 225;
+		case 10:
+			voltage = 250;
+		case 11:
+			voltage = 275;
+		case 12:
+			voltage = 300;
+		case 13:
+			voltage = 325;
+		case 14:
+			voltage = 350;
+		case 15:
+			voltage = 375;
+		case 16:
+			voltage = 400;
+		case 17:
+			voltage = 425;
+		case 18:
+			voltage = 450;
+}
+
+float maxVoltageFunc(float prevVoltage, float voltage){
 	// Function to measure and store max voltage
 	// Maybe takes voltage as input and checks it against max
 	if(prevVoltage > maxVoltage){
