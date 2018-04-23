@@ -70,7 +70,7 @@ void welcome(){
 	__delay_ms(1500);
 }
 
-float voltageFunc(int adcFlag){
+int voltageFunc(int adcFlag){
 	// Measuring voltage from ADC
 	// Returns actual voltage
 	// Maybe it checks which ADC is enabled and returns relevant voltage
@@ -92,40 +92,58 @@ int voltageFloor(int adc){
 	switch(voltage){
 		case 1:
 			voltage = 25;
+			break;
 		case 2:
 			voltage = 50;
+			break;
 		case 3:
 			voltage = 75;
+			break;
 		case 4:
 			voltage = 100;
+			break;
 		case 5:
 			voltage = 125;
+			break;
 		case 6:
 			voltage = 150;
+			break;
 		case 7:
 			voltage = 175;
+			break;
 		case 8:
 			voltage = 200;
+			break;
 		case 9:
 			voltage = 225;
+			break;
 		case 10:
 			voltage = 250;
+			break;
 		case 11:
 			voltage = 275;
+			break;
 		case 12:
 			voltage = 300;
+			break;
 		case 13:
 			voltage = 325;
+			break;
 		case 14:
 			voltage = 350;
+			break;
 		case 15:
 			voltage = 375;
+			break;
 		case 16:
 			voltage = 400;
+			break;
 		case 17:
 			voltage = 425;
+			break;
 		case 18:
 			voltage = 450;
+			break;
 }
 
 float maxVoltageFunc(float prevVoltage, float voltage){
