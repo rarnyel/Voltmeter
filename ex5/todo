@@ -1,11 +1,11 @@
 Basic Functionality:
-	- Display a welcome message and the range of input voltages
-	- Constantly update the current DC voltage applied to the ADC
-	- A hold button may be pressed to hold the current value
++	- Display a welcome message and the range of input voltages
++	- Constantly update the current DC voltage applied to the ADC
+/	- A hold button may be pressed to hold the current value
 	- Pressing the hold button again resumes measurement
 
 Advanced Functionality:
-	- A second ADC connected to the PIC to measure a secondary DC / voltage differential
+/	- A second ADC connected to the PIC to measure a secondary DC / voltage differential
 	- Pressing a mode button shows the maximum voltage applied
 	- Pressing a sample button stores in memory
 	- An alarm feature should sound a buzzer if voltage falls below a threshold
@@ -13,10 +13,10 @@ Advanced Functionality:
 			Could add to the volt function
 
 Separate functions required:
-/	- Function for welcome message
-/	- Function to measure calculate the DC voltage applied
-/	- Function to show the maximum voltage applied
-*	- Function to time and display the time spent below threshold
++	- Function for welcome message
++	- Function to measure calculate the DC voltage applied
+	- Function to show the maximum voltage applied
+	- Function to time and display the time spent below threshold
 
 Pins taken (out of 13):
 	- LCD		6 pins (Maybe 5)
@@ -38,15 +38,14 @@ For the hold button:
 	If statement in main loop to check whether held or not
 
 Misc:
-	Displaying the number shouldn't be part of any other functions
-	Just connect R/W for the LCD to ground
+	Maybe make the buttons tri-state:
+		Upon button press, add 1
+		Modulo by 3, remainder will be eiter 0, 1 or 2
 
 Immediate Jobs:
 	Find out how much the welcome takes
 	Test the interrupts
 	Check if you need to reset cursor after clear
-	Check to see if we need break in the voltageFloor function
-	Only update V1 V2 on pressing switch button
 	Maybe have all the flags stored within 1 variable, rework buttons to work using bits within variable
 	
 Things to find out:	
