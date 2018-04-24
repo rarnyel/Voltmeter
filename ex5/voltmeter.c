@@ -14,8 +14,9 @@
 
 // General variable setup
 	// Setting up flags
-	int holdFlag = 0;	// 1 if hold, switch using the interrupt
-	int adcFlag = 0;	// Decides which ADC to use (0 for ADC1, 1 for ADC2)
+	//unsigned int flags = 0x00;	// Bit 0 is holdFlag, Bit 1 is adcFlag, bitwise XOR
+	unsigned short holdFlag = 0;	// 1 if hold, switch using the interrupt
+	unsigned short adcFlag = 0;	// Decides which ADC to use (0 for ADC1, 1 for ADC2)
 
 	// Setting storage variable for raw ADC output
 	unsigned int adc1 = 0;
@@ -40,6 +41,21 @@ void interrupt isr(){
 	switch(INTCONbits.RBIF){
 		case 1:
 			adcFlag = !adcFlag;
+
+			Lcd_Set_Cursor(2,1);
+			
+			// Prints V1 or V2 based on which ADC is being read
+			switch(adcFlag){
+				case 0:
+					Lcd_Write_String("mV1");
+					break;
+				case 1:
+					Lcd_Write_String("mV2");
+					break;
+      		}
+
+			Lcd_Set_Cursor(1,1);
+
 			break;
 	}
 
@@ -50,71 +66,34 @@ void interrupt isr(){
 
 void welcome(){
 	// Show welcome message and voltage limits
-	Lcd_Clear();			// Technically unnecessary
 	Lcd_Set_Cursor(1,1);	// Sets cursor on first 8 bits
 	Lcd_Write_String("Hello Wo");
 	Lcd_Set_Cursor(2,1);
 	Lcd_Write_String("rld!");
 	__delay_ms(1000);
-	Lcd_Clear();
+	Lcd_Write_String("50 mV");
 	Lcd_Set_Cursor(1,1);	
 	Lcd_Write_String("250 - 47");
-	Lcd_Set_Cursor(2,1);
-	Lcd_Write_String("50 mV");
 	__delay_ms(500);
 }
 
-int voltageFunc(int adcFlag){
+int voltageFunc(unsigned short adcFlag){
 	// Measuring voltage from ADC
 	// Returns actual voltage
 	// Maybe it checks which ADC is enabled and returns relevant voltage
 	// 10-bit ADC so 1024 discrete voltage points between 0.25V and Vdd
-	switch (adcFlag){
-		case 1:
-			adc1 = readADC();
-			voltage1 = voltageFloor(adc1);
-			break;
-		case 2:
-			adc2 = readADC();
-			voltage2 = voltageFloor(adc2);
-			break;
-	}
-}
 
-int voltageFloor(int adc){
+	adc = readADC(unsigned short adcFlag);
+	voltage = voltageFloor(adc);
+
 	voltage = adc / 57;
 	voltage = adc * 286;
 
 	if(voltage<286){
-		voltage = 286;
+		voltage = 250;
 	}
 	
 	return voltage;
-}
-
-int maxVoltageFunc(int prevVoltage, int voltage){
-	// Function to measure and store max voltage
-	// Maybe takes voltage as input and checks it against max
-	if(prevVoltage > maxVoltage){
-		prevVoltage = maxVoltage;
-	}
-}
-
-void print(int cursor, int string, char input){
-	Lcd_Clear();
-	Lcd_Set_Cursor(cursor,1);
-	switch(string){
-		case 0:		// for string
-			Lcd_Write_String(input);
-			break;
-		case 1:
-			Lcd_Write_Char(input):
-			break;
-	}		
-}	
-
-int time(){
-	// Function to time and display the time spent below threshold
 }
 
 void main(){
@@ -151,26 +130,12 @@ void main(){
 				// Read and display ADC voltage
 				prevVoltage = voltage;
 				voltage = voltageFunc(adcFlag);
-				Lcd_Clear();
-				Lcd_Set_Cursor(1,1);
-				Lcd_Write_Voltage(voltage);
-				Lcd_Set_Cursor(2,1);
-				
-				// Prints V1 or V2 based on which ADC is being read
-				switch(adcFlag){
-					case 0:
-						Lcd_Write_String("mV1");
-						break;
-					case 1:
-						Lcd_Write_String("mV2");
-						break;
-      			}
+				Lcd_Write_Int(voltage);
 
 				break;
 
 			case 1:
 				// Hold last measured ADC voltage
-				Lcd_Clear();
 				Lcd_Write_Int(voltage);
 				break;
 		}

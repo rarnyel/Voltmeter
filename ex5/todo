@@ -47,6 +47,7 @@ Immediate Jobs:
 	Check if you need to reset cursor after clear
 	Check to see if we need break in the voltageFloor function
 	Only update V1 V2 on pressing switch button
+	Maybe have all the flags stored within 1 variable, rework buttons to work using bits within variable
 	
 Things to find out:	
 	
