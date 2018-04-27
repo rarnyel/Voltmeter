@@ -1,0 +1,22 @@
+Hold = 0
+	ADC = 0
+		Display ADC1
+	ADC = 1
+		Display ADC2
+	ADC = 2
+		Display differential
+	
+Hold = 1
+	ADC = 0
+		Show last voltage
+	ADC = 1
+		Sample voltage
+	ADC = 2
+	 	
+Hold = 2
+	ADC = 0
+		Show sampled voltage
+	ADC = 1
+		Show max voltage (reseton holdflag?)
+	ADC = 2
+		

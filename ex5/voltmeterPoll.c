@@ -46,29 +46,9 @@ void interrupt isr(){
 			break;
 	}
 	
-	switch(INTCONbits.RBIF){
-		case 1:
-			adcFlag = !adcFlag;
-
-			Lcd_Set_Cursor(2,1);
-			
-			// Prints V1 or V2 based on which ADC is being read
-			switch(adcFlag){
-				case 0:
-					Lcd_Write_String("mV1");
-					break;
-				case 1:
-					Lcd_Write_String("mV2");
-					break;
-      		}
-
-			Lcd_Set_Cursor(1,1);
-
-			break;
-	}
-
 	// Reset interrupt flag
 	INTCONbits.INTF = 0;
+	INTCONbits.RBIF = 0;
 	
 	// Re-enable global interrupts
 	INTCONbits.GIE = 1;
@@ -106,11 +86,31 @@ int voltageFunc(unsigned short adcFlag){
 	return voltage;
 }
 
+void adcSwitch(){
+	if(PORTBbits.RB7 == 1){
+			
+		adcFlag = !adcFlag;
+
+		Lcd_Set_Cursor(2,1);
+				
+		switch(adcFlag){
+			case 0:
+				Lcd_Write_String("mV1");
+				break;
+			case 1:
+				Lcd_Write_String("mV2");
+				break;
+		}
+
+		__delay_ms(200);
+	}
+}
+
 unsigned int maxFunc(unsigned int voltage){
 	if(voltage > maxVoltage){
 		maxVoltage = voltage;
 	}
-}
+}	
 
 void main(){
 	// Setting up TRISA and TRISB
@@ -119,14 +119,10 @@ void main(){
 
 	// Reset the external interrupt flag
 	INTCONbits.INTF = 0;
-	// Reset the RB interrupt-on-change flag
-	INTCONbits.RBIF = 0;
 	// Interrupt on the rising edge
 	OPTION_REGbits.INTEDG = 1;
 	// Enable the external interrupt
 	INTCONbits.INTE = 1;
-	// Enable the RB interrupt-on-change
-	INTCONbits.RBIE = 1;
 	// Global interrupt enable
 	INTCONbits.GIE = 1;
 
@@ -141,6 +137,7 @@ void main(){
 
 	// Main loop
 	while(1){
+		adcSwitch();
 		switch(holdFlag){
 			case 0:
 				// Read and display ADC voltage
@@ -153,17 +150,16 @@ void main(){
 			case 1:
 				// Hold last measured ADC voltage
 				Lcd_Write_Int(voltage);
-
+	
 				switch(PORTBbits.RB7){
 					case 1:
 						sampleVoltage = voltage;
-						break;
+						break
 				}
 
 				break;
 			
 			case 2:
-				// Print sampled voltage
 				Lcd_Write_Int(sampleVoltage);
 				break;
 		}
