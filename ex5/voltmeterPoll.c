@@ -77,7 +77,7 @@ int voltageFunc(unsigned short adcFlag){
 	voltage = voltageFloor(adc);
 
 	voltage = adc / 57;
-	voltage = adc * 286;
+	voltage = voltage * 286;
 
 	if(voltage<286){
 		voltage = 250;
