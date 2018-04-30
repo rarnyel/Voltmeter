@@ -13,18 +13,21 @@
 #include "lcd.h"
 
 	unsigned int adc1 = 0;
-    int adc = 0;
+    unsigned int adc = 0;
 
 	// Setting storage variable for actual voltage
-	int voltage = 0;
-	int voltage1 = 0;
+	unsigned int voltage = 0;
+	unsigned int voltage1 = 0;
     
-    int holdFlag = 0;
+    short holdFlag = 0;
     
 void interrupt isr(){
+    INTCONbits.GIE = 0;
 	holdFlag = !holdFlag;
 	// Reset interrupt flag
 	INTCONbits.INTF = 0;
+    __delay_ms(200);
+    INTCONbits.GIE = 1;
     }
 
 void welcome(){
