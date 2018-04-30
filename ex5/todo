@@ -1,8 +1,8 @@
 Basic Functionality:
 +	- Display a welcome message and the range of input voltages
 +	- Constantly update the current DC voltage applied to the ADC
-/	- A hold button may be pressed to hold the current value
-/	- Pressing the hold button again resumes measurement
++	- A hold button may be pressed to hold the current value
++	- Pressing the hold button again resumes measurement
 
 Advanced Functionality:
 /	- A second ADC connected to the PIC to measure a secondary DC / voltage differential
