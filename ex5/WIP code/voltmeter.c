@@ -57,13 +57,12 @@ void interrupt isr(){
 void welcome(){
 	// Show welcome message and voltage limits
 	Lcd_Set_Cursor(1,1);	// Sets cursor on first 8 bits
-	Lcd_Write_String("Hello Wo");
-	Lcd_Set_Cursor(2,1);
-	Lcd_Write_String("rld!");
+	Lcd_Write_String("Hello");
 	__delay_ms(1000);
-	Lcd_Write_String("50 mV");
-	Lcd_Set_Cursor(1,1);	
+    Lcd_Clear();	
 	Lcd_Write_String("250 - 47");
+    Lcd_Set_Cursor(2,1);
+	Lcd_Write_String("50");
 	__delay_ms(500);
 }
 
@@ -75,15 +74,15 @@ int voltageFunc(/*unsigned short adcFlag*/){
 
 	adcVal = readADC(/*adcFlag*/);
 
-//	voltage = adcVal / 57;
-//	voltage = voltage * 286;
+	voltage = adcVal / 57;
+	voltage = voltage * 286;
 
-//	if(voltage<286){
-//		voltage = 250;
-//	}
+	if(voltage<286){
+		voltage = 250;
+	}
 	
-//	return voltage;
-    return adcVal;
+	return voltage;
+//    return adcVal;
 }
 /*
 void adcSwitch(){
