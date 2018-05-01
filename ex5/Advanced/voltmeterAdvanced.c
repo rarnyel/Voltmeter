@@ -3,7 +3,6 @@
 #pragma config WDTE = OFF
 #pragma config PWRTE = ON
 #pragma config CP = OFF
-#pragma warning 
 
 // Set oscillator frequency
 #define _XTAL_FREQUENCY 4000000
@@ -39,17 +38,19 @@ void interrupt isr(){
 }
 
 void welcome (){
+	// Prints welcome message and voltage range
 	Lcd_Write_String("Hi 0.25-");
-	Lcd_Set_Cursor(2,1);
-	Lcd_Write_String("5V");
-	__delay_ms(1000);
-	Lcd_Set_Cursor(1,1);
-	Lcd_Clear();
+	Lcd_Set_Cursor(2,1);			// Sets cursor to second 8 bits
+	Lcd_Write_String("5V");	
+	__delay_ms(1000);				// Delays 1s
+	Lcd_Set_Cursor(1,1);			// Sets cursor back to first 8 bits
+	Lcd_Clear();					// Clears LCD
 }
 
 int voltageFunc(){
 	// Measures an ADC output and converts to voltage
-
+	
+	// readADC edited to allow an input variable to select ADC
 	adcVal = readADC(adcFlag);     // Saved ADC output to adcVal
 	
     // Converts to an actual voltage
@@ -78,15 +79,20 @@ int voltageFunc(){
 }
 
 unsigned char adcSwitch(){
+	// Function to toggle adcFlag if button is pressed and to change the second
+	// 8 bits of the display
 	switch(PORTAbits.RA4){
+		// Toggles adcFlag if RA4 is pressed
 		case 1:
 			adcFlag = !adcFlag;
 			__delay_ms(200);
 	}
 	
-	Lcd_Set_Cursor(2,1);
+	Lcd_Set_Cursor(2,1);		// Moves cursor the second 8 bits
 	switch(holdFlag){
+		// Checks holdFlag
 		case 0:
+			// If not held, displays either mV 1 or mV 2 based on ADC
 			switch(adcFlag){
 				case 0:
 					Lcd_Write_String("mV 1");
@@ -97,12 +103,13 @@ unsigned char adcSwitch(){
 			}
 			break;
 		case 1:
+			// If held, writes hold
 			Lcd_Write_String("Hold");
 			break;
 	}
-	Lcd_Set_Cursor(1,1);
+	Lcd_Set_Cursor(1,1);		// Resets cursor
 	
-	return adcFlag;
+	return adcFlag;				// Outputs adcFlag from function
 }
 
 void main(){
@@ -126,19 +133,22 @@ void main(){
 	// Initialise LCD and show welcome message
 	Lcd_Init();
 	Lcd_Clear();
-	welcome();
+	welcome();					// Displays welcome message
 	
 // Main loop
 	while(1){
-		adcFlag = adcSwitch();
+		adcFlag = adcSwitch();	// Checks to see if adc button is pressed
 		switch(holdFlag){
+			// Checks holdFlag to see if held
 			case 0:
+				// If held, prints voltage of selected ADC
 				voltage = voltageFunc(adcFlag);
 				Lcd_Write_Int(voltage);
 				__delay_ms(200);
 				Lcd_Clear();
 				break;
 			case 1:
+				// If not held, prints last shown voltage
 				Lcd_Write_Int(voltage);
 				Lcd_Clear();
 				break;
