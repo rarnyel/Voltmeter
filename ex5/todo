@@ -5,10 +5,10 @@ Basic Functionality:
 +	- Pressing the hold button again resumes measurement
 
 Advanced Functionality:
-/	- A second ADC connected to the PIC to measure a secondary DC / voltage differential
--	- Pressing a mode button shows the maximum voltage applied
-/	- Pressing a sample button stores in memory
-	- An alarm feature should sound a buzzer if voltage falls below a threshold
++	- A second ADC connected to the PIC to measure a secondary DC / voltage differential
+	- Pressing a mode button shows the maximum voltage applied
+	- Pressing a sample button stores in memory
++	- An alarm feature should sound a buzzer if voltage falls below a threshold
 	- The built in timer for the PIC should measure and display the time it spends below threshold
 			Could add to the volt function
 
@@ -47,7 +47,6 @@ Immediate Jobs:
 	Find out how much the welcome takes
 	Test the interrupts
 	Check if you need to reset cursor after clear
-	Maybe have all the flags stored within 1 variable, rework buttons to work using bits within variable
 	
 Things to find out:	
 	
