@@ -39,9 +39,9 @@ void interrupt isr(){
 
 void welcome (){
 	// Prints welcome message and voltage range
-	Lcd_Write_String("Hi 0.25-");
+	Lcd_Write_String("Hi! 0.25");
 	Lcd_Set_Cursor(2,1);			// Sets cursor to second 8 bits
-	Lcd_Write_String("5V");	
+	Lcd_Write_String("-5V");	
 	__delay_ms(1000);				// Delays 1s
 	Lcd_Set_Cursor(1,1);			// Sets cursor back to first 8 bits
 	Lcd_Clear();					// Clears LCD
